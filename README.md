@@ -2,7 +2,7 @@
 
 **Stratégie long-short dollar- et secteur-neutre sur le S&P 500, pilotée par le texte des 10-K (FinBERT, « Lazy Prices », Word2Vec) et un XGBoost walk-forward, avec univers point-in-time sans biais du survivant.**
 
-> ⚠️ **Run publié = `sample` (50 tickers, ≈ 30 titres investissables par mois).** Sur instruction de l'utilisateur, le run `full` (`RUN_SCALE=full`, univers complet ≈ 900 tickers) n'a pas été exécuté dans cette session ; il est reporté (`.\tasks.ps1 full`). Les chiffres ci-dessous valident la chaîne de bout en bout mais **ne mesurent pas la performance de la stratégie** sur l'univers complet. Voir [Limites](#données-et-limites).
+> ⚠️ **Run publié = `sample` (50 tickers, ≈ 30 titres investissables par mois).** Le run `full` (`RUN_SCALE=full`, univers complet ≈ 900 tickers) n'a pas encore été exécuté (`.\tasks.ps1 full`). Les chiffres ci-dessous valident la chaîne de bout en bout mais **ne mesurent pas la performance de la stratégie** sur l'univers complet. Voir [Limites](#données-et-limites).
 
 ## Résultats
 
@@ -54,7 +54,7 @@ Autres figures : [drawdown](reports/figures/drawdown.png), [IC par année](repor
 
 ### Lecture des résultats
 
-Les repères indicatifs du cahier des charges (Sharpe ≈ 1,15 ; alpha FF ≈ 3,2 %/an ; t ≈ 1,85) **ne sont pas atteints** sur le run `sample`, et aucun hyperparamètre n'a été ajusté pour s'en rapprocher (grilles et paramètres de portefeuille fixés a priori, voir `docs/DECISIONS.md`). Lecture honnête :
+Les objectifs visés (Sharpe ≈ 1,15 ; alpha FF ≈ 3,2 %/an ; t ≈ 1,85) **ne sont pas atteints** sur le run `sample`, et aucun hyperparamètre n'a été ajusté pour s'en rapprocher (grilles et paramètres de portefeuille fixés a priori, voir `docs/DECISIONS.md`). Lecture honnête :
 
 - **Aucun résultat n'est statistiquement significatif** : la t-stat Newey-West de l'alpha et celle de l'IC sont proches de zéro. Avec ≈ 30 titres par mois répartis sur 12 secteurs, la neutralité sectorielle laisse très peu de paris et l'IC mensuel est très bruité (écart-type de l'ordre de 0,2).
 - **Exposition faible** : avec ≈ 30 titres, `|wᵢ| ≤ 2 %` et la neutralité sectorielle (un secteur représenté par un seul titre impose un poids nul), le levier brut atteignable est bien inférieur à 2 ; les trois stratégies butent sur ces bornes, d'où la même exposition brute moyenne. Les rendements absolus sont donc minuscules : le Sharpe et les t-stats, invariants à l'échelle, sont les indicateurs pertinents.
