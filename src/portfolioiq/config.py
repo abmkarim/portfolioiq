@@ -71,7 +71,7 @@ class Word2VecConfig(BaseModel):
     min_count: int = 5
     epochs: int = 3
     max_tokens_per_doc: int = 6000
-    workers: int = 4
+    workers: int = 1
 
 
 class NlpConfig(BaseModel):

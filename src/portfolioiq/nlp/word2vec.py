@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+import zlib
 from collections import Counter
 
 import numpy as np
@@ -24,15 +25,23 @@ def corpus_before(docs: pd.DataFrame, cutoff: pd.Timestamp, date_col: str = "fea
     return docs[pd.to_datetime(docs[date_col]) < pd.Timestamp(cutoff)]
 
 
+def stable_hash(text: str) -> int:
+    """Process-independent hash (Python's ``hash`` is randomised per process)."""
+    return zlib.crc32(text.encode("utf-8"))
+
+
 def train_word2vec(token_lists: list[list[str]], cfg: Word2VecConfig, seed: int):
-    """Train a gensim Word2Vec model; returns its ``KeyedVectors``."""
+    """Train a gensim Word2Vec model; returns its ``KeyedVectors``.
+
+    Deterministic when ``cfg.workers == 1`` (thread scheduling is the only other source of noise).
+    """
     from gensim.models import Word2Vec
 
     # gensim caps sentences at 10k tokens; chunk long documents
     sents = [t[i:i + 1000] for t in token_lists for i in range(0, len(t), 1000) if t[i:i + 1000]]
     model = Word2Vec(
         sentences=sents, vector_size=cfg.vector_size, window=cfg.window, min_count=cfg.min_count,
-        workers=cfg.workers, epochs=cfg.epochs, seed=seed, sg=0,
+        workers=cfg.workers, epochs=cfg.epochs, seed=seed, sg=0, hashfxn=stable_hash,
     )
     return model.wv
 

@@ -1,0 +1,466 @@
+{
+  "run": {
+    "config": "sample",
+    "generated_at": "2026-10-19T16:29:07",
+    "oos_period": [
+      "2018-01",
+      "2024-12"
+    ],
+    "price_source": "yfinance",
+    "universe_sample_size": 50,
+    "finbert_max_sentences_per_item": 16,
+    "tc_bps_per_side": 10.0,
+    "borrow_bps_annual": 50.0,
+    "sharpe_convention": "mean/std of monthly net returns x sqrt(12); dollar-neutral => no RF subtraction"
+  },
+  "strategy": {
+    "n_months": 84,
+    "annualized_return": 0.00569,
+    "annualized_vol": 0.016973,
+    "sharpe": 0.342748,
+    "sortino": 0.505828,
+    "max_drawdown": -0.024006,
+    "hit_rate": 0.595238,
+    "annualized_return_gross": 0.009058,
+    "sharpe_gross": 0.538216,
+    "avg_monthly_turnover": 0.193765,
+    "annual_turnover": 2.325185,
+    "avg_gross_exposure": 0.405883,
+    "avg_names_long": 13.809524,
+    "avg_names_short": 14.083333,
+    "fama_french": {
+      "n_obs": 84,
+      "alpha_monthly": 0.000397,
+      "alpha_annualized": 0.00477,
+      "alpha_tstat_nw": 0.846842,
+      "alpha_pvalue": 0.397083,
+      "betas": {
+        "mkt_rf": -0.002334,
+        "smb": -0.016001,
+        "hml": 0.026791,
+        "rmw": 0.015536,
+        "cma": -0.056113,
+        "mom": 0.026283
+      },
+      "beta_tstats": {
+        "mkt_rf": -0.215536,
+        "smb": -0.698567,
+        "hml": 1.369231,
+        "rmw": 0.631821,
+        "cma": -3.209232,
+        "mom": 1.318994
+      },
+      "r_squared": 0.087025,
+      "newey_west_lags": 6,
+      "residual_vol_annualized": 0.016838
+    }
+  },
+  "benchmarks": {
+    "random_signal": {
+      "n_months": 84,
+      "annualized_return": -0.010256,
+      "annualized_vol": 0.021784,
+      "sharpe": -0.462253,
+      "sortino": -0.611315,
+      "max_drawdown": -0.088916,
+      "hit_rate": 0.440476,
+      "annualized_return_gross": -0.003922,
+      "sharpe_gross": -0.169829,
+      "avg_monthly_turnover": 0.446031,
+      "annual_turnover": 5.352372,
+      "avg_gross_exposure": 0.408062,
+      "avg_names_long": 13.880952,
+      "avg_names_short": 14.107143,
+      "fama_french": {
+        "n_obs": 84,
+        "alpha_monthly": -0.000703,
+        "alpha_annualized": -0.008436,
+        "alpha_tstat_nw": -1.245405,
+        "alpha_pvalue": 0.212983,
+        "betas": {
+          "mkt_rf": -0.026302,
+          "smb": 0.029362,
+          "hml": -0.024693,
+          "rmw": 0.027579,
+          "cma": 0.006884,
+          "mom": 0.002147
+        },
+        "beta_tstats": {
+          "mkt_rf": -1.597784,
+          "smb": 1.497021,
+          "hml": -0.65649,
+          "rmw": 1.232272,
+          "cma": 0.154448,
+          "mom": 0.114231
+        },
+        "r_squared": 0.051598,
+        "newey_west_lags": 6,
+        "residual_vol_annualized": 0.022026
+      }
+    },
+    "momentum_12_1": {
+      "n_months": 84,
+      "annualized_return": 0.002058,
+      "annualized_vol": 0.023527,
+      "sharpe": 0.099034,
+      "sortino": 0.138956,
+      "max_drawdown": -0.059986,
+      "hit_rate": 0.488095,
+      "annualized_return_gross": 0.004366,
+      "sharpe_gross": 0.196957,
+      "avg_monthly_turnover": 0.105905,
+      "annual_turnover": 1.270856,
+      "avg_gross_exposure": 0.41083,
+      "avg_names_long": 14.214286,
+      "avg_names_short": 13.607143,
+      "fama_french": {
+        "n_obs": 84,
+        "alpha_monthly": 3e-05,
+        "alpha_annualized": 0.000361,
+        "alpha_tstat_nw": 0.070598,
+        "alpha_pvalue": 0.943718,
+        "betas": {
+          "mkt_rf": -0.005627,
+          "smb": -0.036216,
+          "hml": 0.039952,
+          "rmw": 0.003063,
+          "cma": -0.051655,
+          "mom": 0.089375
+        },
+        "beta_tstats": {
+          "mkt_rf": -0.511763,
+          "smb": -1.039596,
+          "hml": 1.476558,
+          "rmw": 0.107464,
+          "cma": -1.529367,
+          "mom": 3.859618
+        },
+        "r_squared": 0.354462,
+        "newey_west_lags": 6,
+        "residual_vol_annualized": 0.019625
+      }
+    }
+  },
+  "ic": {
+    "mean": 0.02696,
+    "tstat": 1.235057,
+    "std": 0.200065,
+    "n_months": 84,
+    "share_positive": 0.583333,
+    "by_holding_year": {
+      "2018": -0.020838,
+      "2019": 0.064739,
+      "2020": -0.043731,
+      "2021": 0.049396,
+      "2022": 0.047699,
+      "2023": 0.048579,
+      "2024": 0.042876
+    }
+  },
+  "robustness": {
+    "costs": {
+      "5bps": {
+        "n_months": 84,
+        "annualized_return": 0.007614,
+        "annualized_vol": 0.017287,
+        "sharpe": 0.447454,
+        "sortino": 0.661969,
+        "max_drawdown": -0.025154,
+        "hit_rate": 0.595238,
+        "annualized_return_gross": 0.010196,
+        "sharpe_gross": 0.594776,
+        "avg_monthly_turnover": 0.252123,
+        "annual_turnover": 3.025476,
+        "avg_gross_exposure": 0.417759,
+        "avg_names_long": 14.02381,
+        "avg_names_short": 13.880952,
+        "fama_french": {
+          "n_obs": 84,
+          "alpha_monthly": 0.000513,
+          "alpha_annualized": 0.006158,
+          "alpha_tstat_nw": 1.076184,
+          "alpha_pvalue": 0.281845,
+          "betas": {
+            "mkt_rf": 0.000689,
+            "smb": -0.025579,
+            "hml": 0.018579,
+            "rmw": 0.013784,
+            "cma": -0.043475,
+            "mom": 0.019256
+          },
+          "beta_tstats": {
+            "mkt_rf": 0.059843,
+            "smb": -1.208457,
+            "hml": 0.93916,
+            "rmw": 0.535795,
+            "cma": -2.067663,
+            "mom": 0.98011
+          },
+          "r_squared": 0.075055,
+          "newey_west_lags": 6,
+          "residual_vol_annualized": 0.017261
+        }
+      },
+      "20bps": {
+        "n_months": 84,
+        "annualized_return": 0.000617,
+        "annualized_vol": 0.017839,
+        "sharpe": 0.043385,
+        "sortino": 0.060821,
+        "max_drawdown": -0.029965,
+        "hit_rate": 0.511905,
+        "annualized_return_gross": 0.004432,
+        "sharpe_gross": 0.256698,
+        "avg_monthly_turnover": 0.118393,
+        "annual_turnover": 1.420711,
+        "avg_gross_exposure": 0.383791,
+        "avg_names_long": 13.654762,
+        "avg_names_short": 13.964286,
+        "fama_french": {
+          "n_obs": 84,
+          "alpha_monthly": 5.7e-05,
+          "alpha_annualized": 0.000688,
+          "alpha_tstat_nw": 0.118984,
+          "alpha_pvalue": 0.905288,
+          "betas": {
+            "mkt_rf": -0.006076,
+            "smb": 0.001178,
+            "hml": 0.019193,
+            "rmw": 0.010772,
+            "cma": -0.049275,
+            "mom": 0.025618
+          },
+          "beta_tstats": {
+            "mkt_rf": -0.656243,
+            "smb": 0.043087,
+            "hml": 0.988402,
+            "rmw": 0.432995,
+            "cma": -2.60692,
+            "mom": 1.225587
+          },
+          "r_squared": 0.056383,
+          "newey_west_lags": 6,
+          "residual_vol_annualized": 0.017991
+        }
+      }
+    },
+    "subperiods": {
+      "2018-01_2020-12": {
+        "n_months": 36,
+        "annualized_return": 0.001484,
+        "annualized_vol": 0.018878,
+        "sharpe": 0.08775,
+        "sortino": 0.124433,
+        "max_drawdown": -0.024006,
+        "hit_rate": 0.583333,
+        "annualized_return_gross": 0.004282,
+        "sharpe_gross": 0.235184,
+        "avg_monthly_turnover": 0.150949,
+        "annual_turnover": 1.811393,
+        "avg_gross_exposure": 0.38899,
+        "avg_names_long": 13.055556,
+        "avg_names_short": 14.083333,
+        "fama_french": {
+          "n_obs": 36,
+          "alpha_monthly": 0.00068,
+          "alpha_annualized": 0.008163,
+          "alpha_tstat_nw": 0.704421,
+          "alpha_pvalue": 0.48117,
+          "betas": {
+            "mkt_rf": 0.020419,
+            "smb": -0.053493,
+            "hml": 0.076756,
+            "rmw": -0.073184,
+            "cma": -0.04576,
+            "mom": 0.066014
+          },
+          "beta_tstats": {
+            "mkt_rf": 1.259591,
+            "smb": -1.495928,
+            "hml": 3.157016,
+            "rmw": -1.725297,
+            "cma": -0.934821,
+            "mom": 2.954545
+          },
+          "r_squared": 0.273549,
+          "newey_west_lags": 6,
+          "residual_vol_annualized": 0.017676
+        }
+      },
+      "2021-01_2024-12": {
+        "n_months": 48,
+        "annualized_return": 0.008856,
+        "annualized_vol": 0.015538,
+        "sharpe": 0.575245,
+        "sortino": 0.900347,
+        "max_drawdown": -0.015471,
+        "hit_rate": 0.604167,
+        "annualized_return_gross": 0.012655,
+        "sharpe_gross": 0.814498,
+        "avg_monthly_turnover": 0.225877,
+        "annual_turnover": 2.710528,
+        "avg_gross_exposure": 0.418553,
+        "avg_names_long": 14.375,
+        "avg_names_short": 14.083333,
+        "fama_french": {
+          "n_obs": 48,
+          "alpha_monthly": 0.000592,
+          "alpha_annualized": 0.007109,
+          "alpha_tstat_nw": 1.545818,
+          "alpha_pvalue": 0.122148,
+          "betas": {
+            "mkt_rf": -0.00828,
+            "smb": 0.009421,
+            "hml": 0.003999,
+            "rmw": 0.035504,
+            "cma": -0.038087,
+            "mom": 0.006597
+          },
+          "beta_tstats": {
+            "mkt_rf": -0.645807,
+            "smb": 0.432526,
+            "hml": 0.185976,
+            "rmw": 1.703124,
+            "cma": -1.778197,
+            "mom": 0.307777
+          },
+          "r_squared": 0.068518,
+          "newey_west_lags": 6,
+          "residual_vol_annualized": 0.016056
+        }
+      }
+    },
+    "ablations": {
+      "no_word2vec": {
+        "n_months": 84,
+        "annualized_return": 0.005938,
+        "annualized_vol": 0.018508,
+        "sharpe": 0.329101,
+        "sortino": 0.487088,
+        "max_drawdown": -0.041918,
+        "hit_rate": 0.571429,
+        "annualized_return_gross": 0.009545,
+        "sharpe_gross": 0.520986,
+        "avg_monthly_turnover": 0.212046,
+        "annual_turnover": 2.544547,
+        "avg_gross_exposure": 0.412856,
+        "avg_names_long": 13.809524,
+        "avg_names_short": 14.095238,
+        "fama_french": {
+          "n_obs": 84,
+          "alpha_monthly": 0.00013,
+          "alpha_annualized": 0.001565,
+          "alpha_tstat_nw": 0.255198,
+          "alpha_pvalue": 0.79857,
+          "betas": {
+            "mkt_rf": 0.003242,
+            "smb": -0.022325,
+            "hml": 0.001719,
+            "rmw": 0.049716,
+            "cma": -0.017058,
+            "mom": 0.029091
+          },
+          "beta_tstats": {
+            "mkt_rf": 0.302699,
+            "smb": -1.053871,
+            "hml": 0.096829,
+            "rmw": 2.545414,
+            "cma": -0.750592,
+            "mom": 1.466705
+          },
+          "r_squared": 0.145671,
+          "newey_west_lags": 6,
+          "residual_vol_annualized": 0.017761
+        },
+        "ic_mean": 0.011586,
+        "ic_tstat": 0.489737
+      },
+      "no_finbert": {
+        "n_months": 84,
+        "annualized_return": 0.007766,
+        "annualized_vol": 0.020127,
+        "sharpe": 0.394413,
+        "sortino": 0.64927,
+        "max_drawdown": -0.030908,
+        "hit_rate": 0.559524,
+        "annualized_return_gross": 0.011466,
+        "sharpe_gross": 0.575192,
+        "avg_monthly_turnover": 0.217928,
+        "annual_turnover": 2.615138,
+        "avg_gross_exposure": 0.418713,
+        "avg_names_long": 13.97619,
+        "avg_names_short": 14.047619,
+        "fama_french": {
+          "n_obs": 84,
+          "alpha_monthly": 0.000311,
+          "alpha_annualized": 0.003727,
+          "alpha_tstat_nw": 0.647921,
+          "alpha_pvalue": 0.517036,
+          "betas": {
+            "mkt_rf": 0.01556,
+            "smb": -0.013769,
+            "hml": 0.019151,
+            "rmw": 0.033945,
+            "cma": -0.024208,
+            "mom": 0.021898
+          },
+          "beta_tstats": {
+            "mkt_rf": 1.600986,
+            "smb": -0.501964,
+            "hml": 0.688229,
+            "rmw": 1.191974,
+            "cma": -0.648221,
+            "mom": 1.02645
+          },
+          "r_squared": 0.058614,
+          "newey_west_lags": 6,
+          "residual_vol_annualized": 0.020275
+        },
+        "ic_mean": 0.028218,
+        "ic_tstat": 1.245255
+      }
+    }
+  },
+  "data_quality": {
+    "universe": {
+      "n_tickers": 50,
+      "n_mapped": 45,
+      "mapping_rate_tickers": 0.9,
+      "mapping_rate_member_days": 0.924376,
+      "by_source": {
+        "wikipedia_constituents": 31,
+        "edgar_name_search": 8,
+        "sec_company_tickers": 6,
+        "unmapped": 5
+      },
+      "n_currently_absent": 19
+    },
+    "filings": {
+      "n_filings": 546,
+      "download_rate": 1.0,
+      "item1a_extraction_rate": 0.946886,
+      "item7_extraction_rate": 0.882784,
+      "both_items_rate": 0.8663,
+      "by_form": {
+        "10-K": 546
+      }
+    },
+    "prices": {
+      "source": "see config prices.source",
+      "n_tickers": 50,
+      "tickers_with_prices": 35,
+      "coverage_tickers": 0.7,
+      "coverage_member_days": 0.760904,
+      "n_tickers_left_index": 19,
+      "coverage_tickers_left_index": 0.315789
+    },
+    "shares": {
+      "n_companies": 45,
+      "companies_with_shares": 41,
+      "coverage": 0.911111,
+      "by_source": {
+        "dei:EntityCommonStockSharesOutstanding": 41
+      }
+    }
+  }
+}

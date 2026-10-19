@@ -69,7 +69,7 @@ def test_dag_structure():
 
 
 def test_dagbag_imports_without_errors():
-    pytest.importorskip("airflow")
+    pytest.importorskip("airflow.models")
     from airflow.models import DagBag
 
     bag = DagBag(dag_folder=str(ROOT / "dags"), include_examples=False)

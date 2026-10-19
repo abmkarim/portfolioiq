@@ -15,12 +15,17 @@ log = get_logger("portfolioiq.cli")
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="portfolioiq")
-    parser.add_argument("command", choices=[s.replace("_", "-") for s in STEPS] + ["run-all"])
+    parser.add_argument("command", choices=[s.replace("_", "-") for s in STEPS] + ["run-all", "update-docs"])
     parser.add_argument("--config", default=None, help="YAML config (default: configs/default.yaml)")
     parser.add_argument("--from-step", default=None, help="run-all: start at this step")
     args = parser.parse_args(argv)
 
     cfg = load_config(args.config)
+    if args.command == "update-docs":
+        from portfolioiq.evaluation.readme import update_docs
+
+        update_docs(cfg.reports_dir / "metrics.json")
+        return 0
     stamp = time.strftime("%Y%m%d_%H%M%S")
     setup_logging(log_file=cfg.path("logs_dir") / f"pipeline_{cfg.name}_{stamp}.jsonl")
     steps = list(STEPS) if args.command == "run-all" else [args.command.replace("-", "_")]

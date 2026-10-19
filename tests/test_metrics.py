@@ -42,3 +42,16 @@ def test_ff_regression_recovers_alpha():
     assert res["alpha_annualized"] == pytest.approx(0.048, abs=0.006)
     assert res["betas"]["mkt_rf"] == pytest.approx(0.5, abs=0.05)
     assert res["alpha_tstat_nw"] > 3
+
+
+def test_readme_injection(tmp_path):
+    from portfolioiq.evaluation.readme import inject, results_markdown
+
+    p = tmp_path / "R.md"
+    p.write_text("intro\n<!-- metrics:start -->\n<!-- metrics:end -->\nfin\n", encoding="utf-8")
+    m = {"run": {"config": "t", "oos_period": ["2018-01", "2024-12"]},
+         "strategy": {"sharpe": 1.234, "fama_french": {"alpha_annualized": 0.0321}}, "ic": {"mean": 0.02}}
+    assert inject(p, "metrics", results_markdown(m))
+    txt = p.read_text(encoding="utf-8")
+    assert "| Sharpe (net) | 1.23 |" in txt and "3.21 %" in txt and txt.endswith("fin\n")
+    assert inject(p, "metrics", "x") and "1.23" not in p.read_text(encoding="utf-8")

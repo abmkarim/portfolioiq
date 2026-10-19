@@ -53,7 +53,7 @@ nlp:
     min_count: 5
     epochs: 3
     max_tokens_per_doc: 6000
-    workers: 4
+    workers: 1                   # 1 = bit-for-bit reproducible
 
 model:
   oos_start_year: 2018

@@ -78,7 +78,9 @@ def run_backtest(scores: pd.DataFrame, rets: pd.DataFrame, sectors: pd.Series, c
     daily_frames, monthly_rows, weight_rows = [], [], []
     for k, t in enumerate(dates):
         t = pd.Timestamp(t)
-        nxt = pd.Timestamp(dates[k + 1]) if k + 1 < len(dates) else t + pd.offsets.MonthEnd(1)
+        # last formation date: hold until the end of the following calendar month
+        nxt = pd.Timestamp(dates[k + 1]) if k + 1 < len(dates) else \
+            (t + pd.offsets.MonthBegin(1)) + pd.offsets.MonthEnd(0)
         s = scores[pd.to_datetime(scores["month_end"]) == t].dropna(subset=["score"])
         s = s[s["ticker"].isin(rets.columns)]
         window = rets.loc[(idx <= t)].tail(pc.cov_window)[s["ticker"].tolist()]

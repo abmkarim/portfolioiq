@@ -65,10 +65,11 @@ def make_target(df: pd.DataFrame) -> pd.Series:
 def build_filing_features(cfg: Config) -> pd.DataFrame:
     """FinBERT, TF-IDF similarity and length changes for every filing; writes ``filing_features.parquet``."""
     filings = query(cfg, "select cik, accession, acceptance_datetime, feature_available_date "
-                         "from int_filings_available where feature_available_date is not null")
+                         "from int_filings_available where feature_available_date is not null "
+                         "order by cik, acceptance_datetime, accession")
     filings["prev_accession"] = previous_filing(filings)
     texts = load_texts(cfg, filings["cik"].unique().tolist())
-    texts = texts[texts["accession"].isin(set(filings["accession"]))]
+    texts = texts[texts["accession"].isin(set(filings["accession"]))].sort_values("accession")
     scores = finbert.score_filings(cfg, texts, device="cuda" if _cuda_requested(cfg) else "cpu")
 
     text_map = texts.set_index("accession")[["item1a", "item7"]]
@@ -165,7 +166,7 @@ def build_w2v_features(cfg: Config, filing_feats: pd.DataFrame, cutoffs: dict[in
 def build_features(cfg: Config) -> pd.DataFrame:
     """Build the modelling panel (``panel_features.parquet``) and fold-specific W2V features."""
     filing_feats = build_filing_features(cfg)
-    panel = query(cfg, "select * from fct_monthly_panel where is_investable")
+    panel = query(cfg, "select * from fct_monthly_panel where is_investable order by month_end, ticker")
     panel["month_end"] = pd.to_datetime(panel["month_end"])
     years = list(range(cfg.model.oos_start_year, cfg.model.oos_end_year + 1))
     build_w2v_features(cfg, filing_feats, fold_cutoffs(panel["month_end"], years))

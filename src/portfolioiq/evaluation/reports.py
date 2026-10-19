@@ -71,7 +71,7 @@ def run_backtests(cfg: Config) -> pd.DataFrame:
 def _ic_block(pred: pd.DataFrame) -> dict:
     ic = monthly_ic(pred["month_end"], pred["pred"], pred["ret_fwd_1m"])
     by_year = ic.groupby(pd.to_datetime(ic.index).year).mean()
-    hold_year = ic.groupby((pd.to_datetime(ic.index) + pd.offsets.MonthEnd(1)).year).mean()
+    hold_year = ic.groupby((pd.to_datetime(ic.index) + pd.offsets.MonthBegin(1)).year).mean()
     return {"mean": float(ic.mean()), "tstat": M.tstat(ic), "std": float(ic.std(ddof=1)),
             "n_months": int(len(ic)), "share_positive": float((ic > 0).mean()),
             "by_holding_year": {int(k): float(v) for k, v in hold_year.items()},
@@ -131,6 +131,9 @@ def evaluate(cfg: Config) -> dict:
     # The README reads reports/metrics.json: written by the run defined by RUN_SCALE.
     write_json(_clean(out), cfg.reports_dir / f"metrics_{cfg.name}.json")
     write_json(_clean(out), cfg.reports_dir / "metrics.json")
+    from portfolioiq.evaluation.readme import update_docs
+
+    update_docs(cfg.reports_dir / "metrics.json")
     log.info("evaluation written", sharpe=out["strategy"].get("sharpe"), ic=out["ic"]["mean"])
     return out
 

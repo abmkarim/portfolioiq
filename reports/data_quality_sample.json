@@ -1,0 +1,42 @@
+{
+  "universe": {
+    "n_tickers": 50,
+    "n_mapped": 45,
+    "mapping_rate_tickers": 0.9,
+    "mapping_rate_member_days": 0.92437594731265,
+    "by_source": {
+      "wikipedia_constituents": 31,
+      "edgar_name_search": 8,
+      "sec_company_tickers": 6,
+      "unmapped": 5
+    },
+    "n_currently_absent": 19
+  },
+  "filings": {
+    "n_filings": 546,
+    "download_rate": 1.0,
+    "item1a_extraction_rate": 0.9468864468864469,
+    "item7_extraction_rate": 0.8827838827838828,
+    "both_items_rate": 0.8663003663003663,
+    "by_form": {
+      "10-K": 546
+    }
+  },
+  "prices": {
+    "source": "see config prices.source",
+    "n_tickers": 50,
+    "tickers_with_prices": 35,
+    "coverage_tickers": 0.7,
+    "coverage_member_days": 0.760903875989788,
+    "n_tickers_left_index": 19,
+    "coverage_tickers_left_index": 0.3157894736842105
+  },
+  "shares": {
+    "n_companies": 45,
+    "companies_with_shares": 41,
+    "coverage": 0.9111111111111111,
+    "by_source": {
+      "dei:EntityCommonStockSharesOutstanding": 41
+    }
+  }
+}

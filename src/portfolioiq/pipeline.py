@@ -4,8 +4,11 @@ from __future__ import annotations
 
 import json
 import os
+import subprocess
+import sys
 import time
 from collections.abc import Callable
+from pathlib import Path
 
 import duckdb
 
@@ -44,8 +47,6 @@ def ingest_factors(cfg: Config) -> None:
 
 
 def _dbt(cfg: Config, args: list[str]) -> None:
-    from dbt.cli.main import dbtRunner
-
     dbt_dir = cfg.path("dbt_dir")
     os.environ["PIQ_WAREHOUSE"] = str(cfg.warehouse_path)
     variables = {
@@ -56,9 +57,14 @@ def _dbt(cfg: Config, args: list[str]) -> None:
         "max_filing_age_months": cfg.nlp.max_filing_age_months,
     }
     full = args + ["--project-dir", str(dbt_dir), "--profiles-dir", str(dbt_dir), "--vars", json.dumps(variables)]
-    res = dbtRunner().invoke(full)
-    if not res.success:
-        raise RuntimeError(f"dbt {' '.join(args)} failed: {res.exception}")
+    # Separate process: dbt-duckdb keeps the warehouse open, which would block later readers.
+    exe = Path(sys.executable).parent / ("dbt.exe" if os.name == "nt" else "dbt")
+    cmd = [str(exe)] if exe.exists() else [sys.executable, "-c", "from dbt.cli.main import cli; cli()"]
+    res = subprocess.run(cmd + full, capture_output=True, text=True, encoding="utf-8", errors="replace")
+    tail = "\n".join(res.stdout.splitlines()[-15:])
+    log.info("dbt output", args=" ".join(args), tail=tail)
+    if res.returncode != 0:
+        raise RuntimeError(f"dbt {' '.join(args)} failed:\n{tail}\n{res.stderr[-2000:]}")
 
 
 def dbt_run(cfg: Config) -> None:

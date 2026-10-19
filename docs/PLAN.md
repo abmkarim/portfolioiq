@@ -13,7 +13,7 @@ Légende : [x] fait, [ ] à faire, [~] partiel / limite documentée.
 | 7 | Modèle : walk-forward 2018–2024, embargo 1 mois, XGBoost (HP par validation interne), MLflow, SHAP | runs MLflow parent + folds | [x] |
 | 8 | Portefeuille : Ledoit-Wolf 252 j, CVXPY (dollar-neutre, secteur-neutre, levier ≤ 2, \|w\| ≤ 2 %), coûts, backtest journalier, benchmarks | tests contraintes optimiseur et coûts | [x] |
 | 9 | Évaluation : métriques, IC, FF5+Mom Newey-West, robustesse (5/20 bps, sous-périodes, ablations) | `reports/metrics.json` + figures | [x] |
-| 10 | Airflow : DAG + `docker-compose.yml` | DAG validé (import / `list-import-errors`) | [x] |
+| 10 | Airflow : DAG + `docker-compose.yml` | `airflow dags list-import-errors` vide dans le conteneur officiel 2.10.5, arbre des 11 tâches conforme | [x] |
 | 11 | Power BI : export CSV + `powerbi/README.md` | CSV dans `powerbi/data/` | [x] |
 | 12 | Tests pytest hors réseau + ruff | `.\tasks.ps1 test` vert | [x] |
 | 13 | `.\tasks.ps1 sample` bout en bout (< 30 min CPU, hors premier téléchargement) | `reports/metrics.json` produit | [x] |
