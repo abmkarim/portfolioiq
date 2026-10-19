@@ -1,0 +1,40 @@
+# Airflow (official image) for the PortfolioIQ DAG.
+#   .\tasks.ps1 airflow-up        -> UI on http://localhost:8080 (standalone: credentials printed in the logs)
+#   .\tasks.ps1 airflow-validate  -> parses the DAG folder and lists import errors
+# Python dependencies of the project are installed at container start via _PIP_ADDITIONAL_REQUIREMENTS
+# (dev convenience, as documented by Airflow); for production build a custom image instead.
+x-airflow-common: &airflow-common
+  image: apache/airflow:2.10.5-python3.11
+  env_file:
+    - path: .env
+      required: false
+  environment:
+    AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "true"
+    PIQ_SRC: /opt/airflow/src
+    PIQ_CONFIG: /opt/airflow/configs/sample.yaml
+    PYTHONPATH: /opt/airflow/src
+    _PIP_ADDITIONAL_REQUIREMENTS: ${PIQ_PIP_REQUIREMENTS:-}
+  volumes:
+    - ./dags:/opt/airflow/dags
+    - ./src:/opt/airflow/src
+    - ./dbt:/opt/airflow/dbt
+    - ./configs:/opt/airflow/configs
+    - ./data:/opt/airflow/data
+    - ./reports:/opt/airflow/reports
+    - ./airflow/logs:/opt/airflow/logs
+
+services:
+  airflow:
+    <<: *airflow-common
+    command: standalone
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+  airflow-cli:
+    <<: *airflow-common
+    profiles: ["cli"]
+    entrypoint: ["/bin/bash", "-c"]
+    command:
+      - airflow db migrate > /dev/null && airflow dags list-import-errors && airflow tasks list portfolioiq_pipeline --tree

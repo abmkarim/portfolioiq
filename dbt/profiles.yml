@@ -1,0 +1,7 @@
+portfolioiq:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: "{{ env_var('PIQ_WAREHOUSE', '../data/warehouse_sample.duckdb') }}"
+      threads: 4

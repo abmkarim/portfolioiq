@@ -1,0 +1,22 @@
+# PortfolioIQ — sample run (~50 tickers, every step end to end, CPU < 30 min once data is cached).
+extends: default.yaml
+name: sample
+
+universe:
+  sample_size: 50
+  sample_anchor_date: "2018-01-02"   # 80 % of names drawn among members at OOS start, 20 % among the others
+  sample_oos_share: 0.8
+
+nlp:
+  finbert:
+    max_sentences_per_item: 16
+  word2vec:
+    epochs: 3
+    min_count: 3
+
+model:
+  shap_sample: 1000
+  validation_years: 2
+  param_grid:
+    - {max_depth: 3, learning_rate: 0.05, min_child_weight: 20}
+    - {max_depth: 4, learning_rate: 0.03, min_child_weight: 50}

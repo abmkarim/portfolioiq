@@ -1,0 +1,66 @@
+version: 2
+
+models:
+  - name: stg_universe
+    columns:
+      - name: ticker
+        tests: [not_null]
+      - name: start_date
+        tests: [not_null]
+  - name: stg_filings
+    columns:
+      - name: accession
+        tests: [unique, not_null]
+      - name: acceptance_datetime
+        tests: [not_null]
+  - name: int_filings_available
+    columns:
+      - name: accession
+        tests: [unique, not_null]
+  - name: int_month_ends
+    columns:
+      - name: month_end
+        tests: [unique, not_null]
+  - name: dim_company
+    columns:
+      - name: cik
+        tests: [unique, not_null]
+      - name: ff12
+        tests:
+          - not_null
+          - accepted_values:
+              values: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+              quote: false
+  - name: fct_monthly_panel
+    description: "Point-in-time monthly panel (index members at each month end)."
+    columns:
+      - name: panel_id
+        tests: [unique, not_null]
+      - name: month_end
+        tests:
+          - not_null
+          - relationships:
+              to: ref('int_month_ends')
+              field: month_end
+      - name: ticker
+        tests: [not_null]
+      - name: cik
+        tests:
+          - relationships:
+              to: ref('dim_company')
+              field: cik
+      - name: accession
+        tests:
+          - relationships:
+              to: ref('int_filings_available')
+              field: accession
+  - name: fct_backtest_returns
+    columns:
+      - name: row_id
+        tests: [unique, not_null]
+      - name: ret_net
+        tests: [not_null]
+  - name: fct_shap_importance
+    columns:
+      - name: row_id
+        tests: [unique, not_null]

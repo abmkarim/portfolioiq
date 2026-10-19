@@ -1,0 +1,89 @@
+# PortfolioIQ — full-scale configuration (RUN_SCALE=full).
+# Every hyper-parameter below is fixed a priori; none is tuned on the 2018-2024 test period.
+name: full
+seed: 42
+
+paths:
+  data_dir: data
+  reports_dir: reports
+  mlruns_dir: mlruns
+  logs_dir: logs
+  powerbi_dir: powerbi/data
+  dbt_dir: dbt
+
+universe:
+  components_url: "https://raw.githubusercontent.com/fja05680/sp500/master/S%26P%20500%20Historical%20Components%20%26%20Changes%20(Updated).csv"
+  wiki_title: "List of S&P 500 companies"
+  wiki_revid: 1292523673        # pinned revision (2025-05-27) that still contains the changes table
+  start_date: "2007-01-01"
+  end_date: "2024-12-31"
+  sample_size: null              # null = whole historical universe
+  name_match_threshold: 0.82
+
+edgar:
+  forms: ["10-K", "10-K405"]
+  filing_start: "2007-01-01"     # 2007 filings only serve as "previous year" for 2008 changes
+  filing_end: "2024-12-31"
+  max_requests_per_second: 8
+  download_workers: 4
+  lookback_days_before_entry: 450
+  min_section_chars: 2000
+
+prices:
+  source: yfinance               # yfinance | tiingo | crsp_csv
+  start: "2006-01-01"
+  end: "2025-01-31"
+  batch_size: 40
+  delisting_return_acquisition: 0.0
+  delisting_return_unknown: -0.30
+
+nlp:
+  max_filing_age_months: 15
+  tfidf_max_features: 20000
+  finbert:
+    model_name: ProsusAI/finbert
+    max_sentences_per_item: 64   # compute budget cap (CPU)
+    batch_size: 32
+    max_length: 128
+    quantize: true               # dynamic int8 quantisation on CPU
+    num_threads: 0               # 0 = all cores
+  word2vec:
+    vector_size: 100
+    window: 5
+    min_count: 5
+    epochs: 3
+    max_tokens_per_doc: 6000
+    workers: 4
+
+model:
+  oos_start_year: 2018
+  oos_end_year: 2024
+  embargo_months: 1
+  validation_years: 2
+  n_estimators_max: 600
+  early_stopping_rounds: 50
+  shap_sample: 2000
+  n_jobs: 4
+  param_grid:
+    - {max_depth: 3, learning_rate: 0.05, min_child_weight: 50}
+    - {max_depth: 5, learning_rate: 0.05, min_child_weight: 50}
+    - {max_depth: 3, learning_rate: 0.02, min_child_weight: 200, reg_lambda: 5.0}
+    - {max_depth: 4, learning_rate: 0.03, min_child_weight: 100}
+
+portfolio:
+  risk_aversion: 10.0
+  turnover_penalty_multiplier: 1.0
+  max_weight: 0.02
+  max_gross: 2.0
+  cov_window: 252
+  min_cov_obs: 126
+  tc_bps: 10.0
+  borrow_bps_annual: 50.0
+  alpha_ic: 0.05
+  solver: CLARABEL
+
+evaluation:
+  newey_west_lags: 6
+  cost_sensitivity_bps: [5, 20]
+  subperiods: [["2018-01", "2020-12"], ["2021-01", "2024-12"]]
+  run_ablations: true
