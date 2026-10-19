@@ -17,5 +17,5 @@ Légende : [x] fait, [ ] à faire, [~] partiel / limite documentée.
 | 11 | Power BI : export CSV + `powerbi/README.md` | CSV dans `powerbi/data/` | [x] |
 | 12 | Tests pytest hors réseau + ruff | `.\tasks.ps1 test` vert | [x] |
 | 13 | `.\tasks.ps1 sample` bout en bout (< 30 min CPU, hors premier téléchargement) | `reports/metrics.json` produit | [x] |
-| 14 | Run `full` | reporté ; limite documentée dans le README | [~] |
+| 14 | Run `full` | `reports/metrics.json` du run complet, README mis à jour | [x] |
 | 15 | README (métriques lues dans `metrics.json`), scan de secrets, push `origin main` | `git status` propre | [x] |

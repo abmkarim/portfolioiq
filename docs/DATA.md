@@ -19,23 +19,7 @@ Tous les téléchargements sont idempotents : relancer une étape ne retélécha
 ## Qualité des données
 
 <!-- data:start -->
-*Statistiques du run `sample` (lues dans `reports/metrics.json`).*
-
-| Indicateur | Valeur |
-|---|---:|
-| Tickers de l'univers historique traités | 50 |
-| Taux de mapping ticker → CIK (tickers) | 90.0 % |
-| Taux de mapping pondéré par jours d'appartenance | 92.4 % |
-| … via table Wikipédia / `company_tickers.json` / recherche EDGAR par nom | 31 / 6 / 8 (non mappés : 5) |
-| 10-K sélectionnés | 546 |
-| Taux de téléchargement | 100.0 % |
-| Extraction Item 1A réussie | 94.7 % |
-| Extraction Item 7 réussie | 88.3 % |
-| Extraction des deux items | 86.6 % |
-| Couverture prix — tickers avec historique (yfinance) | 70.0 % (35/50) |
-| Couverture prix — jours d'appartenance couverts | 76.1 % |
-| Couverture prix — titres sortis de l'indice avant fin 2024 | 31.6 % (sur 19) |
-| Sociétés avec actions en circulation XBRL | 91.1 % |
+Indicateurs calculés à chaque run et enregistrés dans `reports/metrics.json` (section `data_quality`) : nombre de tickers de l'univers historique traités, taux de mapping ticker → CIK (brut et pondéré par jours d'appartenance, par source), nombre de 10-K sélectionnés, taux de téléchargement, taux d'extraction des Items 1A et 7, couverture des prix (tickers, jours d'appartenance, titres sortis de l'indice) et part des sociétés avec actions en circulation XBRL.
 <!-- data:end -->
 
 ## Remarques
